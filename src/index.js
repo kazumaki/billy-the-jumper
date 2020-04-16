@@ -26,10 +26,10 @@ let cursors;
 let lastState = 'right';
 
 function preload () {
-  this.load.image('platform', './assets/platform.png');
+  this.load.image('platform', 'assets/platform.png');
   this.load.spritesheet(
       'goat',
-      './assets/goat_main.png',
+      'assets/goat_main.png',
       { frameWidth: 68, frameHeight: 54 }
     );
 }
@@ -111,6 +111,6 @@ function update () {
   
   if (cursors.up.isDown && player.body.touching.down)
   {
-    player.setVelocityY(-330);
+    player.setVelocityY(-450);
   }
 }

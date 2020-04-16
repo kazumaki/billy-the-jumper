@@ -24,6 +24,10 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.(gif|png|jpe?g|svg|xml)$/i,
+        use: "file-loader"
+      },
     ],
   },
 
@@ -50,12 +54,12 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, 'index.html'),
+        from: path.resolve(__dirname, 'src/index.html'),
         to: path.resolve(__dirname, 'build')
       },
       {
-        from: path.resolve(__dirname , 'assets', '**', '*'),
-        to: path.resolve(__dirname, 'build')
+        from: path.resolve(__dirname , 'src/assets'),
+        to: path.resolve(__dirname, 'build/assets')
       }
     ]),
     new webpack.DefinePlugin({
