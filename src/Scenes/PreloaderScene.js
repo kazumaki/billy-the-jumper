@@ -77,6 +77,13 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('blueButton1', 'assets/ui/button_1.png');
     this.load.image('blueButton2', 'assets/ui/button_2.png');
     this.load.audio('bgMusic', ['assets/songs/intro.wav']);
+
+    this.load.image('platform', 'assets/gameplay/platform.png');
+    this.load.spritesheet(
+      'goat',
+      'assets/gameplay/goat_main.png',
+      { frameWidth: 68, frameHeight: 54 }
+    );
   }
 
   create () {
