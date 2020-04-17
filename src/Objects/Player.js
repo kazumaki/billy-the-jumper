@@ -6,27 +6,35 @@ const Player = function(scene) {
   let maxJumps = options.defaultJumpsCount;
 
   const getScene = () => scene;
-  const controller = scene.physics.add.sprite(options.playerStartPosition, scene.game.config.height / 2, 'goat');
+  const controller = scene.physics.add.sprite(options.playerStartPosition, 200, 'goat', 12);
   const isTouchingDown = () => controller.body.touching.down;
+  const isRunning = () => controller.anims.isPlaying;
   
   controller.setGravityY(options.playerGravity);
-  controller.setCollideWorldBounds(true);
-  controller.anims.play('right');
 
 
+
+  const setX = function(x) {
+    controller.x = x;
+  }
+
+  const getX = () => controller.x;
+  const getY = () => controller.y;
+
+  const run = () => controller.anims.play('run');
 
   const jump = function() {
     if (isTouchingDown() || (jumps > 0 && jumps < maxJumps)) {
       if (isTouchingDown()) {
         jumps = 0;
       }
-
+      controller.anims.stop();
       controller.setVelocityY(options.jumpForce * -1);
       jumps += 1;
     }
   }
 
-  return { getScene, controller, isTouchingDown, jump }
+  return { getScene, controller, isTouchingDown, isRunning, jump, run, setX, getX, getY }
 }
 
 export default Player;
