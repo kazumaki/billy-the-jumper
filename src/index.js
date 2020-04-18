@@ -7,18 +7,22 @@ import TitleScene from './Scenes/TitleScene';
 import OptionsScene from './Scenes/OptionsScene';
 import CreditsScene from './Scenes/CreditsScene';
 import Model from './model';
+import SubmitScoreScene from './Scenes/SubmitScoreScene';
+import ScoreScene from './Scenes/ScoreScene';
 
 class Game extends Phaser.Game {
   constructor () {
     super(config);
     const model = new Model();
-    this.globals = { model, backgroundMusic: null };
+    this.globals = { model, backgroundMusic: null, score: 0 };
     this.scene.add('Boot', BootScene);
     this.scene.add('Preloader', PreloaderScene);
     this.scene.add('Title', TitleScene);
     this.scene.add('Options', OptionsScene);
     this.scene.add('Credits', CreditsScene);
     this.scene.add('Game', GameScene);
+    this.scene.add('SubmitScore', SubmitScoreScene);
+    this.scene.add('Score', ScoreScene);
     this.scene.start('Boot');
   }
 }

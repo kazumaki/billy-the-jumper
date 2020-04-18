@@ -84,6 +84,7 @@ export default class PreloaderScene extends Phaser.Scene {
       'assets/gameplay/goat_main.png',
       { frameWidth: 68, frameHeight: 54 }
     );
+    this.load.html('scoreForm', 'assets/ui/score_form.html');
   }
 
   create () {
@@ -94,8 +95,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.readyCount = 0;
   }
   
-  ready () {  	
-    this.scene.start('Title');
+  ready () {
     this.readyCount++;
     if (this.readyCount === 2) {
       this.scene.start('Title');

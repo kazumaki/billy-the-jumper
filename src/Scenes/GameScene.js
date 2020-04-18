@@ -62,6 +62,7 @@ export default class GameScene extends Phaser.Scene {
     const timeElapsed = this.getTimeElapsed();
     const now = performance.now();
     this.score += (timeElapsed * 0.001 + ((now - this.lastTime) / 1000));
+    this.sys.game.globals.score = this.score;
     this.lastTime = now;
   }
 
@@ -103,7 +104,6 @@ export default class GameScene extends Phaser.Scene {
       }
     }, this);
 
-    // adding new platforms
     if(minDistance > this.nextPlatformDistance){
       var nextPlatformWidth = Phaser.Math.Between(100, 350);
       this.addPlatform(nextPlatformWidth, config.width + config.width / 2, Phaser.Math.Between(450, 550));
@@ -112,10 +112,10 @@ export default class GameScene extends Phaser.Scene {
 
   update () {
     this.setScore();
-    this.scoreText.text = `Score: ${this.score}`;
+    this.scoreText.text = `Score: ${Math.round(this.score)}`;
     this.player.setX(200);
     if (this.player.getY() > 600) {
-      this.scene.start('Game');
+      this.scene.start('SubmitScore');
     }
 
     this.checkPlatforms();
