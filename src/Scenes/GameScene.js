@@ -1,6 +1,7 @@
 import 'phaser';
 import config from '../Config/config'
 import Player from '../Objects/Player';
+import options from '../Config/options';
 
 export default class GameScene extends Phaser.Scene {
   constructor () {
@@ -16,7 +17,9 @@ export default class GameScene extends Phaser.Scene {
   }
   
   create () {
+    this.cameras.main.setBackgroundColor('0x0c88c7')
     this.startTime = performance.now();
+    this.lastTime = performance.now();
     this.score = 0;
     this.scoreText = this.add.text(0, 0, `Score: ${this.score}`, { fontSize: '32px', fill: '#fff'});
     
@@ -34,7 +37,7 @@ export default class GameScene extends Phaser.Scene {
     
     this.anims.create({
       key: 'run',
-      frames: this.anims.generateFrameNumbers('goat', { start: 4, end: 7}),
+      frames: this.anims.generateFrameNumbers('goat', { start: 7, end: 4}),
       frameRate: 6,
       repeat: -1
     });
@@ -46,10 +49,27 @@ export default class GameScene extends Phaser.Scene {
     this.physics.add.collider(this.player.controller, this.platformGroup, () => {
       if (!this.player.isRunning()) {
         this.player.run();
+        this.player.resetJumps();
       }
     });
   }
-  
+
+  getTimeElapsed () {
+    return (performance.now() - this.startTime) / 1000;
+  }
+
+  setScore () {
+    const timeElapsed = this.getTimeElapsed();
+    const now = performance.now();
+    this.score += (timeElapsed * 0.001 + ((now - this.lastTime) / 1000));
+    this.lastTime = now;
+  }
+
+  getSpeed () {
+    const timeElapsed = this.getTimeElapsed();
+    return options.platformSpeed * (timeElapsed / 250 + 1);
+  }
+
   addPlatform(platformWidth, posX, posY) {
     let platform;
 
@@ -66,31 +86,16 @@ export default class GameScene extends Phaser.Scene {
       platform.setImmovable(true);
       this.platformGroup.add(platform);
     }
-    console.log(this.getScore()/ 100 + 1);
-    platform.setVelocityX((350 * (this.getScore()/ 100 + 1)* -1));
+    console.log(this.getSpeed());
+    platform.setVelocityX(-this.getSpeed());
     platform.displayWidth = platformWidth;
     this.nextPlatformDistance = Phaser.Math.Between(50, 100);
   }
 
-  getTimeElapsed () {
-    return (performance.now() - this.startTime) / 1000;
-  }
-
-  getScore () {
-    const timeElapsed = this.getTimeElapsed();
-    return Math.round(timeElapsed * (timeElapsed * 0.1 + 1));
-  }
-
-  update () {
-    this.scoreText.text = `Score: ${this.getScore()}`;
-    this.player.setX(200);
-    if (this.player.getY() > 600) {
-      this.scene.start('Game');
-    }
-
-    let minDistance = 800;
+  checkPlatforms () {
+    let minDistance = config.width;
     this.platformGroup.getChildren().forEach(function(platform){
-      let platformDistance = 800 - platform.x - platform.displayWidth / 2;
+      let platformDistance = config.width - platform.x - platform.displayWidth / 2;
       minDistance = Math.min(minDistance, platformDistance);
       if(platform.x < - platform.displayWidth / 2){
         this.platformGroup.killAndHide(platform);
@@ -101,7 +106,19 @@ export default class GameScene extends Phaser.Scene {
     // adding new platforms
     if(minDistance > this.nextPlatformDistance){
       var nextPlatformWidth = Phaser.Math.Between(100, 350);
-      this.addPlatform(nextPlatformWidth, 800 + 800 / 2, Phaser.Math.Between(450, 550));
+      this.addPlatform(nextPlatformWidth, config.width + config.width / 2, Phaser.Math.Between(450, 550));
     }
+  }
+
+  update () {
+    this.setScore();
+    this.scoreText.text = `Score: ${this.score}`;
+    this.player.setX(200);
+    if (this.player.getY() > 600) {
+      this.scene.start('Game');
+    }
+
+    this.checkPlatforms();
+
   }
 };

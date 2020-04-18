@@ -23,18 +23,17 @@ const Player = function(scene) {
 
   const run = () => controller.anims.play('run');
 
+  const resetJumps = () => jumps = 0;
+
   const jump = function() {
     if (isTouchingDown() || (jumps > 0 && jumps < maxJumps)) {
-      if (isTouchingDown()) {
-        jumps = 0;
-      }
       controller.anims.stop();
       controller.setVelocityY(options.jumpForce * -1);
       jumps += 1;
     }
   }
 
-  return { getScene, controller, isTouchingDown, isRunning, jump, run, setX, getX, getY }
+  return { getScene, controller, isTouchingDown, isRunning, jump, run, setX, getX, getY, resetJumps }
 }
 
 export default Player;
