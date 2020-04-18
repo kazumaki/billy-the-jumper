@@ -20,14 +20,18 @@ export default class GameScene extends Phaser.Scene {
     this.cameras.main.setBackgroundColor('0x0c88c7')
     this.startTime = performance.now();
     this.lastTime = performance.now();
+    this.lastAddedClound = performance.now();
     this.score = 0;
     this.scoreText = this.add.text(0, 0, `Score: ${this.score}`, { fontSize: '32px', fill: '#fff'});
     
     this.cursors = this.input.keyboard.createCursorKeys();
-
+    
+    this.cloudGroup = this.add.group();
     this.platformGroup = this.add.group({
       removeCallback: (platform) => platform.scene.platformPool.add(platform)
     });
+
+
 
     this.platformPool = this.add.group({
       removeCallback: (platform) => platform.scene.platformGroup.add(platform)
@@ -52,6 +56,42 @@ export default class GameScene extends Phaser.Scene {
         this.player.resetJumps();
       }
     });
+  }
+
+  update () {
+    this.setScore();
+    this.checkClouds();
+    this.scoreText.text = `Score: ${Math.round(this.score)}`;
+    this.player.setX(200);
+    if (this.player.getY() > 600) {
+      this.scene.start('SubmitScore');
+    }
+
+    this.checkPlatforms();
+
+  }
+
+  checkClouds() {
+    const timeElapsed = (performance.now() - this.lastAddedClound) / 1000;
+
+    this.cloudGroup.getChildren().forEach( cloud => {
+      if (cloud.x < -400) {
+        this.cloudGroup.killAndHide(cloud);
+        this.cloudGroup.remove(cloud);
+      }
+    })
+
+    if (timeElapsed > 2) {
+      if (this.cloudGroup.getLength() < 10) {
+        const currentClound = Phaser.Math.Between(1, 2);
+        const cloud = this.physics.add.sprite(1200, Phaser.Math.Between(0, 600), `cloud${currentClound}`);
+        cloud.setVelocityX(Phaser.Math.Between(-250, -50));
+        cloud.displayHeight = 80;
+        cloud.displayWidth = 120;
+        this.cloudGroup.add(cloud);
+      }
+      this.lastAddedClound = performance.now();
+    }
   }
 
   getTimeElapsed () {
@@ -84,6 +124,7 @@ export default class GameScene extends Phaser.Scene {
     }
     else {
       platform = this.physics.add.sprite(posX, posY, "platform");
+      platform.setDepth(1);
       platform.setImmovable(true);
       this.platformGroup.add(platform);
     }
@@ -108,17 +149,5 @@ export default class GameScene extends Phaser.Scene {
       var nextPlatformWidth = Phaser.Math.Between(100, 350);
       this.addPlatform(nextPlatformWidth, config.width + config.width / 2, Phaser.Math.Between(450, 550));
     }
-  }
-
-  update () {
-    this.setScore();
-    this.scoreText.text = `Score: ${Math.round(this.score)}`;
-    this.player.setX(200);
-    if (this.player.getY() > 600) {
-      this.scene.start('SubmitScore');
-    }
-
-    this.checkPlatforms();
-
   }
 };

@@ -7,6 +7,7 @@ const Player = function(scene) {
 
   const getScene = () => scene;
   const controller = scene.physics.add.sprite(options.playerStartPosition, 200, 'goat', 12);
+  controller.setDepth(1);
   const isTouchingDown = () => controller.body.touching.down;
   const isRunning = () => controller.anims.isPlaying;
   

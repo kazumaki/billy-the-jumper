@@ -79,6 +79,8 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.audio('bgMusic', ['assets/songs/intro.wav']);
 
     this.load.image('platform', 'assets/gameplay/platform.png');
+    this.load.image('cloud1', 'assets/gameplay/cloud-1.png');
+    this.load.image('cloud2', 'assets/gameplay/cloud-2.png');
     this.load.spritesheet(
       'goat',
       'assets/gameplay/goat_main.png',
