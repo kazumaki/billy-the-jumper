@@ -134,14 +134,14 @@ export default class GameScene extends Phaser.Scene {
   setScore () {
     const timeElapsed = this.getTimeElapsed();
     const now = performance.now();
-    this.score += (timeElapsed * 0.001 + ((now - this.lastTime) / 1000));
+    this.score += ((now - this.lastTime) / 1000) * (timeElapsed / 30 + 1);
     this.sys.game.globals.score = this.score;
     this.lastTime = now;
   }
 
   getSpeed () {
     const timeElapsed = this.getTimeElapsed();
-    return options.platformSpeed * (timeElapsed / 250 + 1);
+    return options.platformSpeed * (timeElapsed / 150 + 1);
   }
 
   addPlatform(platformWidth, posX, posY) {
