@@ -76,6 +76,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('checkedBox', 'assets/ui/check_box_checked.png');
     this.load.image('blueButton1', 'assets/ui/button_1.png');
     this.load.image('blueButton2', 'assets/ui/button_2.png');
+    this.load.image('tutorialKeyboard', 'assets/ui/small-keyboard.png');
     this.load.audio('bgMusic', ['assets/songs/intro.wav']);
 
     this.load.image('platform', 'assets/gameplay/platform.png');
@@ -83,6 +84,13 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('cloud2', 'assets/gameplay/cloud-2.png');
     this.load.image('smallMountain', 'assets/gameplay/smallMountain.png');
     this.load.image('largeMountain', 'assets/gameplay/LargeMountain.png');
+
+    this.load.spritesheet(
+      'loading',
+      'assets/ui/loading.png',
+      { frameWidth: 220, frameHeight: 220 }
+    );
+
     this.load.spritesheet(
       'goat',
       'assets/gameplay/goat_main.png',

@@ -9,9 +9,18 @@ export default class ScoreScene extends Phaser.Scene {
 
   create() {
     this.gameID = 'BPZZxYOK0OEXIVgjhDS3';
+    this.loading = this.physics.add.sprite(config.width / 2, config.height / 2, 'loading', 0);
+    this.anims.create({
+      key: 'loading',
+      frames: this.anims.generateFrameNumbers('loading', {start: 0, end: 11}),
+      frameRate: 12,
+      repeat: -1
+    });
+    this.loading.anims.play('loading');
     fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${this.gameID}/scores`)
     .then(response => response.json())
     .then(result => {
+      this.loading.destroy();
       result.result.sort((a, b) => { return b.score - a.score});
       result.result.forEach((element, index) => {
         if (index < 10) {

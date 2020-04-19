@@ -56,6 +56,7 @@ export default class GameScene extends Phaser.Scene {
 
     this.player = Player(this);
     this.input.on('pointerdown', this.player.jump, this);
+    this.cursors.space.onDown = this.player.jump;
     this.cursors.up.onDown = this.player.jump;
 
     this.physics.add.collider(this.player.controller, this.platformGroup, () => {
