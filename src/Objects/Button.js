@@ -27,12 +27,17 @@ export default class Button extends Phaser.GameObjects.Container {
   }
 
   pointerover() {
-    this.hoverSound.play();
+    if (this.scene.sys.game.globals.model.soundOn){
+      this.hoverSound.play();
+    }
+
     this.button.setTexture(this.key2)
   }
 
   pointerdown() {
-    this.selectSound.play();
+    if (this.scene.sys.game.globals.model.soundOn){
+      this.selectSound.play();
+    }
     this.scene.scene.start(this.targetScene)
   }
 }

@@ -21,6 +21,12 @@ export default class GameScene extends Phaser.Scene {
     this.startTime = performance.now();
     this.lastTime = performance.now();
     this.lastAddedClound = performance.now();
+    this.sys.game.globals.menuMusic.stop();
+    this.deathSound = this.sound.add('death');
+    this.gameMusic = this.sound.add('gameSong' , { volume: 0.5, loop: true});
+    if(this.sys.game.globals.model.musicOn) {
+      this.gameMusic.play();
+    }
     this.score = 0;
     this.scoreText = this.add.text(0, 0, `Score: ${this.score}`, { fontSize: '32px', fill: '#fff'});
     
@@ -66,6 +72,12 @@ export default class GameScene extends Phaser.Scene {
     this.scoreText.text = `Score: ${Math.round(this.score)}`;
     this.player.setX(200);
     if (this.player.getY() > 600) {
+      if (this.sys.game.globals.model.musicOn){
+        this.gameMusic.stop();
+      }
+      if (this.sys.game.globals.model.soundOn){
+        this.deathSound.play();
+      }
       this.scene.start('SubmitScore');
     }
 

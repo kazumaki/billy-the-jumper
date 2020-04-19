@@ -29,7 +29,10 @@ const Player = function(scene) {
 
   const jump = function() {
     if (isTouchingDown() || (jumps > 0 && jumps < maxJumps)) {
-      jumpSound.play();
+      if (scene.sys.game.globals.model.soundOn){
+        jumpSound.play();
+      }
+
       controller.anims.stop();
       controller.setVelocityY(options.jumpForce * -1);
       jumps += 1;
