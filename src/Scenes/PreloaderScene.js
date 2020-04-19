@@ -71,38 +71,39 @@ export default class PreloaderScene extends Phaser.Scene {
 
     this.timedEvent = this.time.delayedCall(3000, this.ready, [], this);
 
-    this.load.image('phaserLogo', 'build/assets/logo.png');
-    this.load.image('box', 'build/assets/ui/check_box.png');
-    this.load.image('checkedBox', 'build/assets/ui/check_box_checked.png');
-    this.load.image('blueButton1', 'build/assets/ui/button_1.png');
-    this.load.image('blueButton2', 'build/assets/ui/button_2.png');
-    this.load.image('tutorialKeyboard', 'build/assets/ui/small-keyboard.png');
+    this.load.image('phaserLogo', 'assets/logo.png');
+    this.load.image('box', 'assets/ui/check_box.png');
+    this.load.image('checkedBox', 'assets/ui/check_box_checked.png');
+    this.load.image('blueButton1', 'assets/ui/button_1.png');
+    this.load.image('blueButton2', 'assets/ui/button_2.png');
+    this.load.image('tutorialKeyboard', 'assets/ui/small-keyboard.png');
+    this.load.audio('bgMusic', ['assets/songs/intro.wav']);
 
-    this.load.image('platform', 'build/assets/gameplay/platform.png');
-    this.load.image('cloud1', 'build/assets/gameplay/cloud-1.png');
-    this.load.image('cloud2', 'build/assets/gameplay/cloud-2.png');
-    this.load.image('smallMountain', 'build/assets/gameplay/smallMountain.png');
-    this.load.image('largeMountain', 'build/assets/gameplay/LargeMountain.png');
+    this.load.image('platform', 'assets/gameplay/platform.png');
+    this.load.image('cloud1', 'assets/gameplay/cloud-1.png');
+    this.load.image('cloud2', 'assets/gameplay/cloud-2.png');
+    this.load.image('smallMountain', 'assets/gameplay/smallMountain.png');
+    this.load.image('largeMountain', 'assets/gameplay/LargeMountain.png');
 
     this.load.spritesheet(
       'loading',
-      'build/assets/ui/loading.png',
+      'assets/ui/loading.png',
       { frameWidth: 220, frameHeight: 220 }
     );
 
     this.load.spritesheet(
       'goat',
-      'build/assets/gameplay/goat_main.png',
+      'assets/gameplay/goat_main.png',
       { frameWidth: 68, frameHeight: 54 }
     );
-    this.load.html('scoreForm', 'build/assets/ui/score_form.html');
+    this.load.html('scoreForm', 'assets/ui/score_form.html');
 
-    this.load.audio('menuHover', 'build/assets/songs/menu-hover.wav');
-    this.load.audio('menuSelect', 'build/assets/songs/menu-select.wav');
-    this.load.audio('jump', 'build/assets/songs/jump.wav');
-    this.load.audio('menuSong', 'build/assets/songs/menu-song.wav');
-    this.load.audio('gameSong', 'build/assets/songs/game-song.wav');
-    this.load.audio('death', 'build/assets/songs/death.wav');
+    this.load.audio('menuHover', 'assets/songs/menu-hover.wav');
+    this.load.audio('menuSelect', 'assets/songs/menu-select.wav');
+    this.load.audio('jump', 'assets/songs/jump.wav');
+    this.load.audio('menuSong', 'assets/songs/menu-song.wav');
+    this.load.audio('gameSong', 'assets/songs/game-song.wav');
+    this.load.audio('death', 'assets/songs/death.wav');
   }
 
   create () {
