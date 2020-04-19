@@ -27,6 +27,8 @@ export default class GameScene extends Phaser.Scene {
     this.cursors = this.input.keyboard.createCursorKeys();
     
     this.cloudGroup = this.add.group();
+    this.mountainGroup = this.add.group();
+
     this.platformGroup = this.add.group({
       removeCallback: (platform) => platform.scene.platformPool.add(platform)
     });
@@ -73,6 +75,24 @@ export default class GameScene extends Phaser.Scene {
 
   checkClouds() {
     const timeElapsed = (performance.now() - this.lastAddedClound) / 1000;
+
+    this.mountainGroup.getChildren().forEach(mountain => {
+      if(mountain.x < -780) {
+        this.mountainGroup.killAndHide(mountain);
+        this.mountainGroup.remove(mountain);
+      }
+    })
+
+    if (!this.mountainGroup.getLength()) {
+      const mountainLarge = this.physics.add.sprite(1200, 500, 'largeMountain');
+      const mountainSmall = this.physics.add.sprite(1200 + 775, 550, 'smallMountain');
+
+      mountainLarge.setVelocityX(-150);
+      mountainSmall.setVelocityX(-150);
+
+      this.mountainGroup.add(mountainLarge);
+      this.mountainGroup.add(mountainSmall);
+    }
 
     this.cloudGroup.getChildren().forEach( cloud => {
       if (cloud.x < -400) {

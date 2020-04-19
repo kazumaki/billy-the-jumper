@@ -81,12 +81,20 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('platform', 'assets/gameplay/platform.png');
     this.load.image('cloud1', 'assets/gameplay/cloud-1.png');
     this.load.image('cloud2', 'assets/gameplay/cloud-2.png');
+    this.load.image('smallMountain', 'assets/gameplay/smallMountain.png');
+    this.load.image('largeMountain', 'assets/gameplay/LargeMountain.png');
     this.load.spritesheet(
       'goat',
       'assets/gameplay/goat_main.png',
       { frameWidth: 68, frameHeight: 54 }
     );
     this.load.html('scoreForm', 'assets/ui/score_form.html');
+
+    this.load.audio('menuHover', 'assets/songs/menu-hover.wav');
+    this.load.audio('menuSelect', 'assets/songs/menu-select.wav');
+    this.load.audio('jump', 'assets/songs/jump.wav');
+    this.load.audio('menuSong', 'assets/songs/menu-song.wav');
+    this.load.audio('gameSong', 'assets/songs/game-song.wav');
   }
 
   create () {

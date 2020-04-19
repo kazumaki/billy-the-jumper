@@ -10,6 +10,7 @@ const Player = function(scene) {
   controller.setDepth(1);
   const isTouchingDown = () => controller.body.touching.down;
   const isRunning = () => controller.anims.isPlaying;
+  const jumpSound = scene.sound.add('jump');
   
   controller.setGravityY(options.playerGravity);
 
@@ -28,6 +29,7 @@ const Player = function(scene) {
 
   const jump = function() {
     if (isTouchingDown() || (jumps > 0 && jumps < maxJumps)) {
+      jumpSound.play();
       controller.anims.stop();
       controller.setVelocityY(options.jumpForce * -1);
       jumps += 1;
