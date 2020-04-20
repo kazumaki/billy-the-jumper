@@ -20,16 +20,20 @@ export default class GameScene extends Phaser.Scene {
     this.sys.game.globals.menuMusic.stop();
     this.deathSound = this.sound.add('death');
     this.gameMusic = this.sound.add('gameSong', { volume: 0.5, loop: true });
+    this.coinSound = this.sound.add('coinCollect');
+
     if (this.sys.game.globals.model.musicOn) {
       this.gameMusic.play();
     }
     this.score = 0;
+    this.coin = 0;
     this.scoreText = this.add.text(0, 0, `Score: ${this.score}`, { fontSize: '32px', fill: '#fff' });
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
     this.cloudGroup = this.add.group();
     this.mountainGroup = this.add.group();
+    this.coinGroup = this.add.group();
 
     this.platformGroup = this.add.group({
       removeCallback: (platform) => platform.scene.platformPool.add(platform),
@@ -39,8 +43,6 @@ export default class GameScene extends Phaser.Scene {
       removeCallback: (platform) => platform.scene.platformGroup.add(platform),
     });
 
-    this.addPlatform(config.width, 800 / 2, 600 / 2);
-
     this.anims.create({
       key: 'run',
       frames: this.anims.generateFrameNumbers('goat', { start: 7, end: 4 }),
@@ -48,7 +50,16 @@ export default class GameScene extends Phaser.Scene {
       repeat: -1,
     });
 
+    this.anims.create({
+      key: 'coin',
+      frames: this.anims.generateFrameNumbers('coin', { start: 0, end: 7 }),
+      frameRate: 6,
+      repeat: -1,
+    });
+
     this.player = Player(this);
+    this.addPlatform(config.width, 800 / 2, 600 / 2);
+
     this.input.on('pointerdown', this.player.jump, this);
     this.cursors.space.onDown = this.player.jump;
     this.cursors.up.onDown = this.player.jump;
@@ -127,7 +138,8 @@ export default class GameScene extends Phaser.Scene {
   setScore() {
     const timeElapsed = this.getTimeElapsed();
     const now = performance.now();
-    this.score += ((now - this.lastTime) / 1000) * (timeElapsed / 30 + 1);
+    this.score += ((now - this.lastTime) / 1000) * (timeElapsed / 30 + 1) + this.coin;
+    this.coin = 0;
     this.sys.game.globals.score = this.score;
     this.lastTime = now;
   }
@@ -139,7 +151,7 @@ export default class GameScene extends Phaser.Scene {
 
   addPlatform(platformWidth, posX, posY) {
     let platform;
-
+    const speed = this.getSpeed();
     if (this.platformPool.getLength()) {
       platform = this.platformPool.getFirst();
       platform.x = posX;
@@ -153,7 +165,20 @@ export default class GameScene extends Phaser.Scene {
       platform.setImmovable(true);
       this.platformGroup.add(platform);
     }
-    platform.setVelocityX(-this.getSpeed());
+
+    for (let i = 0; i < platformWidth; i += 32) {
+      const coin = this.physics.add.sprite(posX - platformWidth / 2 + i, posY - 25, 'coin');
+      coin.anims.play('coin');
+      coin.setVelocityX(-speed);
+      this.physics.add.overlap(coin, this.player.controller, () => {
+        this.coin += 1;
+        if (this.sys.game.globals.model.soundOn) { this.coinSound.play(); }
+        coin.destroy();
+      });
+      this.coinGroup.add(coin);
+    }
+
+    platform.setVelocityX(-speed);
     platform.displayWidth = platformWidth;
     this.nextPlatformDistance = Phaser.Math.Between(50, 100);
   }

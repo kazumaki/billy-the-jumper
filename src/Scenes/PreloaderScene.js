@@ -77,7 +77,6 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.image('blueButton2', 'assets/ui/button_2.png');
     this.load.image('tutorialKeyboard', 'assets/ui/small-keyboard.png');
     this.load.audio('bgMusic', ['assets/songs/intro.wav']);
-
     this.load.image('platform', 'assets/gameplay/platform.png');
     this.load.image('cloud1', 'assets/gameplay/cloud-1.png');
     this.load.image('cloud2', 'assets/gameplay/cloud-2.png');
@@ -95,6 +94,13 @@ export default class PreloaderScene extends Phaser.Scene {
       'assets/gameplay/goat_main.png',
       { frameWidth: 68, frameHeight: 54 },
     );
+
+    this.load.spritesheet(
+      'coin',
+      'assets/gameplay/coin.png',
+      { frameWidth: 16, frameHeight: 16 },
+    );
+
     this.load.html('scoreForm', 'assets/ui/score_form.html');
 
     this.load.audio('menuHover', 'assets/songs/menu-hover.wav');
@@ -103,6 +109,7 @@ export default class PreloaderScene extends Phaser.Scene {
     this.load.audio('menuSong', 'assets/songs/menu-song.wav');
     this.load.audio('gameSong', 'assets/songs/game-song.wav');
     this.load.audio('death', 'assets/songs/death.wav');
+    this.load.audio('coinCollect', 'assets/songs/coin-collect.wav');
   }
 
   init() {
