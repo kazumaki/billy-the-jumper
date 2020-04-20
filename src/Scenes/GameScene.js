@@ -1,57 +1,51 @@
 import 'phaser';
-import config from '../Config/config'
+import config from '../Config/config';
 import Player from '../Objects/Player';
 import options from '../Config/options';
 
 export default class GameScene extends Phaser.Scene {
-  constructor () {
+  constructor() {
     super('Game');
-    this._player = null;
-    this._platforms = null;
-    this._lastState = 'right';
-    this._cursors = null;
+    this.player = null;
+    this.platforms = null;
+    this.lastState = 'right';
+    this.cursors = null;
   }
 
-  preload () {
-
-  }
-  
-  create () {
-    this.cameras.main.setBackgroundColor('0x0c88c7')
+  create() {
+    this.cameras.main.setBackgroundColor('0x0c88c7');
     this.startTime = performance.now();
     this.lastTime = performance.now();
     this.lastAddedClound = performance.now();
     this.sys.game.globals.menuMusic.stop();
     this.deathSound = this.sound.add('death');
-    this.gameMusic = this.sound.add('gameSong' , { volume: 0.5, loop: true});
-    if(this.sys.game.globals.model.musicOn) {
+    this.gameMusic = this.sound.add('gameSong', { volume: 0.5, loop: true });
+    if (this.sys.game.globals.model.musicOn) {
       this.gameMusic.play();
     }
     this.score = 0;
-    this.scoreText = this.add.text(0, 0, `Score: ${this.score}`, { fontSize: '32px', fill: '#fff'});
-    
+    this.scoreText = this.add.text(0, 0, `Score: ${this.score}`, { fontSize: '32px', fill: '#fff' });
+
     this.cursors = this.input.keyboard.createCursorKeys();
-    
+
     this.cloudGroup = this.add.group();
     this.mountainGroup = this.add.group();
 
     this.platformGroup = this.add.group({
-      removeCallback: (platform) => platform.scene.platformPool.add(platform)
+      removeCallback: (platform) => platform.scene.platformPool.add(platform),
     });
-
-
 
     this.platformPool = this.add.group({
-      removeCallback: (platform) => platform.scene.platformGroup.add(platform)
+      removeCallback: (platform) => platform.scene.platformGroup.add(platform),
     });
 
-    this.addPlatform(config.width, 800 / 2, 600/2);
-    
+    this.addPlatform(config.width, 800 / 2, 600 / 2);
+
     this.anims.create({
       key: 'run',
-      frames: this.anims.generateFrameNumbers('goat', { start: 7, end: 4}),
+      frames: this.anims.generateFrameNumbers('goat', { start: 7, end: 4 }),
       frameRate: 6,
-      repeat: -1
+      repeat: -1,
     });
 
     this.player = Player(this);
@@ -67,34 +61,33 @@ export default class GameScene extends Phaser.Scene {
     });
   }
 
-  update () {
+  update() {
     this.setScore();
     this.checkClouds();
     this.scoreText.text = `Score: ${Math.round(this.score)}`;
     this.player.setX(200);
     if (this.player.getY() > 600) {
-      if (this.sys.game.globals.model.musicOn){
+      if (this.sys.game.globals.model.musicOn) {
         this.gameMusic.stop();
       }
-      if (this.sys.game.globals.model.soundOn){
+      if (this.sys.game.globals.model.soundOn) {
         this.deathSound.play();
       }
       this.scene.start('SubmitScore');
     }
 
     this.checkPlatforms();
-
   }
 
   checkClouds() {
     const timeElapsed = (performance.now() - this.lastAddedClound) / 1000;
 
     this.mountainGroup.getChildren().forEach(mountain => {
-      if(mountain.x < -780) {
+      if (mountain.x < -780) {
         this.mountainGroup.killAndHide(mountain);
         this.mountainGroup.remove(mountain);
       }
-    })
+    });
 
     if (!this.mountainGroup.getLength()) {
       const mountainLarge = this.physics.add.sprite(1200, 500, 'largeMountain');
@@ -107,12 +100,12 @@ export default class GameScene extends Phaser.Scene {
       this.mountainGroup.add(mountainSmall);
     }
 
-    this.cloudGroup.getChildren().forEach( cloud => {
+    this.cloudGroup.getChildren().forEach(cloud => {
       if (cloud.x < -400) {
         this.cloudGroup.killAndHide(cloud);
         this.cloudGroup.remove(cloud);
       }
-    })
+    });
 
     if (timeElapsed > 2) {
       if (this.cloudGroup.getLength() < 10) {
@@ -127,11 +120,11 @@ export default class GameScene extends Phaser.Scene {
     }
   }
 
-  getTimeElapsed () {
+  getTimeElapsed() {
     return (performance.now() - this.startTime) / 1000;
   }
 
-  setScore () {
+  setScore() {
     const timeElapsed = this.getTimeElapsed();
     const now = performance.now();
     this.score += ((now - this.lastTime) / 1000) * (timeElapsed / 30 + 1);
@@ -139,7 +132,7 @@ export default class GameScene extends Phaser.Scene {
     this.lastTime = now;
   }
 
-  getSpeed () {
+  getSpeed() {
     const timeElapsed = this.getTimeElapsed();
     return options.platformSpeed * (timeElapsed / 150 + 1);
   }
@@ -147,40 +140,42 @@ export default class GameScene extends Phaser.Scene {
   addPlatform(platformWidth, posX, posY) {
     let platform;
 
-    if(this.platformPool.getLength()) {
+    if (this.platformPool.getLength()) {
       platform = this.platformPool.getFirst();
       platform.x = posX;
       platform.y = posY;
       platform.active = true;
       platform.visible = true;
       this.platformPool.remove(platform);
-    }
-    else {
-      platform = this.physics.add.sprite(posX, posY, "platform");
+    } else {
+      platform = this.physics.add.sprite(posX, posY, 'platform');
       platform.setDepth(1);
       platform.setImmovable(true);
       this.platformGroup.add(platform);
     }
-    console.log(this.getSpeed());
     platform.setVelocityX(-this.getSpeed());
     platform.displayWidth = platformWidth;
     this.nextPlatformDistance = Phaser.Math.Between(50, 100);
   }
 
-  checkPlatforms () {
+  checkPlatforms() {
     let minDistance = config.width;
-    this.platformGroup.getChildren().forEach(function(platform){
-      let platformDistance = config.width - platform.x - platform.displayWidth / 2;
+    this.platformGroup.getChildren().forEach((platform) => {
+      const platformDistance = config.width - platform.x - platform.displayWidth / 2;
       minDistance = Math.min(minDistance, platformDistance);
-      if(platform.x < - platform.displayWidth / 2){
+      if (platform.x < -platform.displayWidth / 2) {
         this.platformGroup.killAndHide(platform);
         this.platformGroup.remove(platform);
       }
     }, this);
 
-    if(minDistance > this.nextPlatformDistance){
-      var nextPlatformWidth = Phaser.Math.Between(100, 350);
-      this.addPlatform(nextPlatformWidth, config.width + config.width / 2, Phaser.Math.Between(450, 550));
+    if (minDistance > this.nextPlatformDistance) {
+      const nextPlatformWidth = Phaser.Math.Between(100, 350);
+      this.addPlatform(
+        nextPlatformWidth,
+        config.width + config.width / 2,
+        Phaser.Math.Between(450, 550),
+      );
     }
   }
-};
+}
