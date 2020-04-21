@@ -4,7 +4,7 @@ const webpack = require('webpack');
 
 module.exports = {
   entry: {
-    app: './src/index.js'
+    app: './src/index.js',
   },
 
   output: {
@@ -26,45 +26,45 @@ module.exports = {
       },
       {
         test: /\.(gif|png|jpe?g|svg|xml)$/i,
-        use: "file-loader"
+        use: 'file-loader',
       },
     ],
   },
 
   optimization: {
     runtimeChunk: 'single',
-    splitChunks: { 
-      chunks: 'all', 
-      cacheGroups: { 
-        default: { 
-          enforce: true, 
-          priority: 1 
-        }, 
-        vendors: { 
-          test: /[\\/]node_modules[\\/]/, 
-          priority: 2, 
-          name: 'vendors', 
-          enforce: true, 
-          chunks: 'all' 
-        }
-      } 
-    } 
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        default: {
+          enforce: true,
+          priority: 1,
+        },
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: 2,
+          name: 'vendors',
+          enforce: true,
+          chunks: 'all',
+        },
+      },
+    },
   },
 
   plugins: [
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, 'src/index.html'),
-        to: path.resolve(__dirname, 'build')
+        to: path.resolve(__dirname, 'build'),
       },
       {
-        from: path.resolve(__dirname , 'src/assets'),
-        to: path.resolve(__dirname, 'build/assets')
-      }
+        from: path.resolve(__dirname, 'src/assets'),
+        to: path.resolve(__dirname, 'build/assets'),
+      },
     ]),
     new webpack.DefinePlugin({
       'typeof CANVAS_RENDERER': JSON.stringify(true),
-      'typeof WEBGL_RENDERER': JSON.stringify(true)
+      'typeof WEBGL_RENDERER': JSON.stringify(true),
     }),
-  ]
+  ],
 };
