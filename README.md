@@ -79,6 +79,11 @@ You can jump twice if you press jump command again (Take care to not hold the bu
 
 ![Profile Image](images/small-keyboard.png) 
 
+#### Score system
+Your total score is based on the amount of time you stay alive, for the first 30 seconds, you gain approximately 1 point for each second alive, these values double every 30 seconds, so the next 30 seconds you'll gain 2 point for each second and so on.
+
+The coins also gives 1 point each so don't forget to collect as many as you can.
+
 ## Game Development
 
 ### Done
