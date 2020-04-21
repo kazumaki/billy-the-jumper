@@ -8,9 +8,7 @@ Billy the Jumper is a simple platform game with scaling difficult that challenge
 
 ## Live version
 
-```
 [Live version](https://billy-the-jumper.herokuapp.com/)
-```
 
 ## Getting Started
 
