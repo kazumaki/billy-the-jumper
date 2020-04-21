@@ -83,7 +83,7 @@ You can jump twice if you press jump command again (Take care to not hold the bu
 
 ### Done
 
-The main goal when I started to develop Billy The Jumper was to create a simple platform game with an endless level, and I had to do it in only five days. I came with a lot of ideas in the first brainstorming session that I was unable to add to the game cause of the lack of time. So what I did was focusing on the basic gameplay development on the first three days, where I developed the basic game flow with a jumper character and auto-generated platforms using Phaser physics functionalities helped a lot. In the last two days, I focused on improving the actual game with better graphics and sound effects, like when the character jumps or die, menu hovering or selection an option, added also some graphics at the background to create the sense of moving.
+The main goal when I started to develop Billy The Jumper was to create a simple platform game with an endless level, and I had to do it in only five days. I came with a lot of ideas in the first brainstorming session that I was unable to add to the game cause of the lack of time. So what I did was focusing on the basic gameplay development on the first three days, where I developed the basic game flow with a jumper character and auto-generated platforms using Phaser physics functionalities helped a lot. In the last two days, I focused on improving the actual game with better graphics and sound effects, like when the character jumps or die, menu hovering or select an option, added some graphics at the background to create the sense of moving, and also implemented high scores system using Leaderboard API system.
 
 ### Ideas for improvement
 
