@@ -4,7 +4,7 @@ import config from '../Config/config';
 export default class SubmitScoreScene extends Phaser.Scene {
   constructor() {
     super('SubmitScore');
-    this.gameID = 'BPZZxYOK0OEXIVgjhDS3';
+    this.gameID = '9cGtrld3ikvsZI3mti7k';
   }
 
   create() {

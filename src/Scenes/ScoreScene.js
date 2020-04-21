@@ -8,7 +8,7 @@ export default class ScoreScene extends Phaser.Scene {
   }
 
   create() {
-    this.gameID = 'BPZZxYOK0OEXIVgjhDS3';
+    this.gameID = '9cGtrld3ikvsZI3mti7k';
     this.loading = this.physics.add.sprite(config.width / 2, config.height / 2, 'loading', 0);
     this.anims.create({
       key: 'loading',
