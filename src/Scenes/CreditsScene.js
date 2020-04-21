@@ -8,7 +8,23 @@ export default class CreditsScene extends Phaser.Scene {
 
   create() {
     this.creditsText = this.add.text(0, 0, 'Credits', { fontSize: '32px', fill: '#fff' });
-    this.madeByText = this.add.text(0, 0, 'Created By: Kazumaki', { fontSize: '26px', fill: '#fff' });
+    this.madeByText = this.add.text(0, 0,
+      `
+      Graphics: \n
+      "LPC Goat" by bluecarrot16 \n
+      "Platform Tiles" by Akshay V \n
+      "Parallax Mountain Background" by GrumpyDiamond \n
+      "Cute Clouds Game Ornament" by bevouliin.com \n
+      "Rotating Coins" by Puddin \n
+      \n
+      \n
+      Sounds: \n
+      "Happy Loops sounds" by Goose Ninja \n
+      "16 / 8 bit soundpakc" by JDWasabi \n
+      \n
+      \n
+      Developed By: Vinicius Campos Carvalho
+      `, { fontSize: '24px', fill: '#fff' });
     this.zone = this.add.zone(config.width / 2, config.height / 2, config.height);
 
     Phaser.Display.Align.In.Center(
@@ -38,10 +54,10 @@ export default class CreditsScene extends Phaser.Scene {
       ease: 'Power1',
       duration: 8000,
       delay: 1000,
-      onComplete: () => {
-        this.madeByTween.destroy();
+      onComplete: function complete() {
+        this.madeByTween.destroy;
         this.scene.start('Title');
-      },
+      }.bind(this),
     });
   }
 }
