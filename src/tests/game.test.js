@@ -1,9 +1,10 @@
 import Game from '../Objects/Game';
+import config from '../Config/config';
 
 let game;
 
 beforeAll(() => {
-  game = new Game();
+  game = new Game(config);
 });
 
 test('Expect score to be 0 when start the game', () => {

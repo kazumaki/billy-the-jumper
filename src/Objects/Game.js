@@ -1,5 +1,4 @@
 import 'phaser';
-import config from '../Config/config';
 import GameScene from '../Scenes/GameScene';
 import BootScene from '../Scenes/BootScene';
 import PreloaderScene from '../Scenes/PreloaderScene';
@@ -11,7 +10,7 @@ import SubmitScoreScene from '../Scenes/SubmitScoreScene';
 import ScoreScene from '../Scenes/ScoreScene';
 
 export default class Game extends Phaser.Game {
-  constructor() {
+  constructor(config) {
     super(config);
     const model = new Model();
     this.globals = {
@@ -25,6 +24,5 @@ export default class Game extends Phaser.Game {
     this.scene.add('Game', GameScene);
     this.scene.add('SubmitScore', SubmitScoreScene);
     this.scene.add('Score', ScoreScene);
-    this.scene.start('Boot');
   }
 }
