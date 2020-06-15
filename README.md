@@ -72,8 +72,8 @@ output: {
 [From Webpack documentation:](https://webpack.js.org/guides/production/) Technically, NODE_ENV is a system environment variable that Node.js exposes into running scripts. It is used by convention to determine dev-vs-prod behavior by server tools, build scripts, and client-side libraries. Contrary to expectations, process.env.NODE_ENV **is not set to "production"** within the build script webpack.config.js. Thus, conditionals like `process.env.NODE_ENV === 'production' ? '[name].[hash].bundle.js' : '[name].bundle.js'` within webpack configurations do not work as expected.
 
 ### Playing the game
+The goal of the game is simple: you have to jump between the platforms and make sure that Billy (Goat) doesn't fall.
 
-The goal of the game is simple, you have to jump between platforms and avoid Billy (Goat) to fall.
 #### Jump Commands
 * Spacebar
 * Up Arrow key
@@ -84,9 +84,9 @@ You can jump twice if you press jump command again (Take care to not hold the bu
 ![Profile Image](images/small-keyboard.png) 
 
 #### Score system
-Your total score is based on the amount of time you stay alive, for the first 30 seconds, you gain approximately 1 point for each second alive, these values double every 30 seconds, so the next 30 seconds you'll gain 2 point for each second and so on.
+Your total score is based on the amount of time you stay alive, for the first 30 seconds, you gain approximately 1 point for each second alive, these values double every 30 seconds, so the next 30 seconds you'll gain 2 points for each second and so on.
 
-The coins also gives 1 point each so don't forget to collect as many as you can.
+The coins also give 1 point each so don't forget to collect as many as you can.
 
 ## Game Development
 
