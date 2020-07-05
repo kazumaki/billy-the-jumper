@@ -1,6 +1,6 @@
 # Billy the Jumper
 
-Billy the Jumper is a simple platform game with scaling difficult that challenges the player.
+Billy the Jumper is a simple platform game with scaling difficulties that challenge the player.
 
 ## Screenshot
 
