@@ -96,7 +96,7 @@ My main goal when I developed Billy The Jumper was to create a simple endless le
 
 ### Ideas for improvement
 
-* Add collectibles items that grant buffs
+* Add collectibles items that grant some bonus
 * Pause system
 * Save options to the localStorage
 * Multiplayer online gameplay
